@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="InvestModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="InvestModelStoreContainer">
+          <EntitySet Name="Axapta" EntityType="InvestModel.Store.Axapta" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AxaptaIsabel" EntityType="InvestModel.Store.AxaptaIsabel" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Isabel" EntityType="InvestModel.Store.Isabel" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Log" EntityType="InvestModel.Store.Log" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__AxaptaIsa__Axapt__0AD2A005" Association="InvestModel.Store.FK__AxaptaIsa__Axapt__0AD2A005">
+            <End Role="Axapta" EntitySet="Axapta" />
+            <End Role="AxaptaIsabel" EntitySet="AxaptaIsabel" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AxaptaIsa__Isabe__0BC6C43E" Association="InvestModel.Store.FK__AxaptaIsa__Isabe__0BC6C43E">
+            <End Role="Isabel" EntitySet="Isabel" />
+            <End Role="AxaptaIsabel" EntitySet="AxaptaIsabel" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Axapta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CUNumber" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="Name" Type="varchar" MaxLength="250" />
+          <Property Name="Company" Type="varchar" MaxLength="250" />
+          <Property Name="ContractNumber" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="ProductName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Investment" Type="decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="Status" Type="varchar" Nullable="false" MaxLength="3" />
+          <Property Name="CreationDate" Type="date" Nullable="false" />
+          <Property Name="UpdateDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AxaptaIsabel">
+          <Key>
+            <PropertyRef Name="AxaptaId" />
+            <PropertyRef Name="IsabelId" />
+          </Key>
+          <Property Name="AxaptaId" Type="int" Nullable="false" />
+          <Property Name="IsabelId" Type="int" Nullable="false" />
+          <Property Name="CreationDate" Type="date" Nullable="false" />
+          <Property Name="UpdateDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Isabel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ContractNumber" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="Amount" Type="decimal" Nullable="false" Precision="7" Scale="2" />
+          <Property Name="Name" Type="varchar" MaxLength="250" />
+          <Property Name="AccountNumber" Type="varchar" Nullable="false" MaxLength="25" />
+          <Property Name="EntryDate" Type="date" Nullable="false" />
+          <Property Name="Status" Type="varchar" Nullable="false" MaxLength="3" />
+          <Property Name="CreationDate" Type="date" Nullable="false" />
+          <Property Name="UpdateDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LogLevel" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="Type" Type="varchar" Nullable="false" MaxLength="25" />
+          <Property Name="Message" Type="varchar" Nullable="false" MaxLength="1000" />
+          <Property Name="CreationDate" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__AxaptaIsa__Axapt__0AD2A005">
+          <End Role="Axapta" Type="InvestModel.Store.Axapta" Multiplicity="1" />
+          <End Role="AxaptaIsabel" Type="InvestModel.Store.AxaptaIsabel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Axapta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AxaptaIsabel">
+              <PropertyRef Name="AxaptaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AxaptaIsa__Isabe__0BC6C43E">
+          <End Role="Isabel" Type="InvestModel.Store.Isabel" Multiplicity="1" />
+          <End Role="AxaptaIsabel" Type="InvestModel.Store.AxaptaIsabel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Isabel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AxaptaIsabel">
+              <PropertyRef Name="IsabelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InvestModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="InvestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Axapta" EntityType="InvestModel.Axapta" />
+          <EntitySet Name="AxaptaIsabel" EntityType="InvestModel.AxaptaIsabel" />
+          <EntitySet Name="Isabel" EntityType="InvestModel.Isabel" />
+          <EntitySet Name="Log" EntityType="InvestModel.Log" />
+          <AssociationSet Name="FK__AxaptaIsa__Axapt__0AD2A005" Association="InvestModel.FK__AxaptaIsa__Axapt__0AD2A005">
+            <End Role="Axapta" EntitySet="Axapta" />
+            <End Role="AxaptaIsabel" EntitySet="AxaptaIsabel" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AxaptaIsa__Isabe__0BC6C43E" Association="InvestModel.FK__AxaptaIsa__Isabe__0BC6C43E">
+            <End Role="Isabel" EntitySet="Isabel" />
+            <End Role="AxaptaIsabel" EntitySet="AxaptaIsabel" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Axapta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CUNumber" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
+          <Property Name="Company" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
+          <Property Name="ContractNumber" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Investment" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="AxaptaIsabel" Relationship="InvestModel.FK__AxaptaIsa__Axapt__0AD2A005" FromRole="Axapta" ToRole="AxaptaIsabel" />
+        </EntityType>
+        <EntityType Name="AxaptaIsabel">
+          <Key>
+            <PropertyRef Name="AxaptaId" />
+            <PropertyRef Name="IsabelId" />
+          </Key>
+          <Property Name="AxaptaId" Type="Int32" Nullable="false" />
+          <Property Name="IsabelId" Type="Int32" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Axapta" Relationship="InvestModel.FK__AxaptaIsa__Axapt__0AD2A005" FromRole="AxaptaIsabel" ToRole="Axapta" />
+          <NavigationProperty Name="Isabel" Relationship="InvestModel.FK__AxaptaIsa__Isabe__0BC6C43E" FromRole="AxaptaIsabel" ToRole="Isabel" />
+        </EntityType>
+        <EntityType Name="Isabel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContractNumber" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="7" Scale="2" />
+          <Property Name="Name" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
+          <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="25" Unicode="false" FixedLength="false" />
+          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="AxaptaIsabel" Relationship="InvestModel.FK__AxaptaIsa__Isabe__0BC6C43E" FromRole="Isabel" ToRole="AxaptaIsabel" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogLevel" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="25" Unicode="false" FixedLength="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="1000" Unicode="false" FixedLength="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <Association Name="FK__AxaptaIsa__Axapt__0AD2A005">
+          <End Role="Axapta" Type="InvestModel.Axapta" Multiplicity="1" />
+          <End Role="AxaptaIsabel" Type="InvestModel.AxaptaIsabel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Axapta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AxaptaIsabel">
+              <PropertyRef Name="AxaptaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AxaptaIsa__Isabe__0BC6C43E">
+          <End Role="Isabel" Type="InvestModel.Isabel" Multiplicity="1" />
+          <End Role="AxaptaIsabel" Type="InvestModel.AxaptaIsabel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Isabel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AxaptaIsabel">
+              <PropertyRef Name="IsabelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="InvestModelStoreContainer" CdmEntityContainer="InvestEntities">
+          <EntitySetMapping Name="Axapta">
+            <EntityTypeMapping TypeName="InvestModel.Axapta">
+              <MappingFragment StoreEntitySet="Axapta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CUNumber" ColumnName="CUNumber" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="ContractNumber" ColumnName="ContractNumber" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Investment" ColumnName="Investment" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AxaptaIsabel">
+            <EntityTypeMapping TypeName="InvestModel.AxaptaIsabel">
+              <MappingFragment StoreEntitySet="AxaptaIsabel">
+                <ScalarProperty Name="AxaptaId" ColumnName="AxaptaId" />
+                <ScalarProperty Name="IsabelId" ColumnName="IsabelId" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Isabel">
+            <EntityTypeMapping TypeName="InvestModel.Isabel">
+              <MappingFragment StoreEntitySet="Isabel">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ContractNumber" ColumnName="ContractNumber" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Log">
+            <EntityTypeMapping TypeName="InvestModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LogLevel" ColumnName="LogLevel" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

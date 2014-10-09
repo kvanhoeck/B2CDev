@@ -1,0 +1,184 @@
+﻿@*@model UtilityServices.Models.BudgetMeter*@
+
+@*@model Tuple<UtilityServices.Models.BudgetMeter, IEnumerable<UtilityServices.Models.BudgetMeterCODA>>*@
+@model UtilityServices.Models.EditModel
+
+@{
+    ViewBag.Title = "Budget Meter to Invoice";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+                <h2>&nbsp;</h2>
+            </hgroup>
+            <p class="ErrorMessage">&nbsp;@ViewBag.Message </p>
+        </div>
+    </section>
+}
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Budget Meter</legend>
+
+        @Html.HiddenFor(model => model._budgetMeter.ID)
+        @Html.HiddenFor(model =>model._budgetMeter.ProcessingStatus)
+
+        <p>
+             @if (Model._budgetMeter.ProcessingStatus == "Open")
+             {
+                  @Html.Label("Make a prepayment for following data")
+             }
+             @if (Model._budgetMeter.ProcessingStatus == "Booking")
+             {
+                  @Html.Label("Make a booking")
+             }
+             @if (Model._budgetMeter.ProcessingStatus == "To Invoice")
+             {
+                 @Html.Label("Make a statement for the following data")      
+             }
+        </p>
+         
+        <div class="editor-label">
+            <label>Contract No.</label>
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model._budgetMeter.ContractNo, new { ReadOnly = true})
+        </div>
+        <div class="editor-label">
+             <label>Account No.</label>
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model._budgetMeter.AccountNo, new { ReadOnly = true})
+        </div>
+        <div class="editor-label">
+             <label>EAN No.</label>
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model._budgetMeter.EAN, new { ReadOnly = true})
+        </div>
+        <div class="editor-label">
+            <label>Grid Owner</label>
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model._budgetMeter.GridOwnerName, new { ReadOnly = true})
+        </div>
+         @if (Model._budgetMeter.ProcessingStatus == "Booking")
+         {
+             <div class="editor-label">
+                <label>Amount Incl. @Model._budgetMeter.VATPercentage%</label>
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model._budgetMeter.AmountIncl, new { ReadOnly = true})
+            </div>
+         }
+         else { 
+            <div class="editor-label">
+                <label>Amount Excl. @Model._budgetMeter.VATPercentage%</label>
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model._budgetMeter.AmountExcl, new { ReadOnly = true})
+            </div>        
+
+         }        
+        @if (Model._budgetMeter.ProcessingStatus == "Open")
+        { 
+             <div class="editor-label">
+                  <label>Prepayment Ref No.</label>
+            </div>
+            
+            <div class="editor-field">
+                @Html.EditorFor(model => model._budgetMeter.PrepaymentReference, new { ReadOnly = false})
+                @Html.ValidationMessageFor(model => model._budgetMeter.PrepaymentReference)
+            </div>
+        }
+        @if (Model._budgetMeter.ProcessingStatus == "To Invoice")
+        { 
+             
+            <div class="editor-label">
+                <label>Prepayment Ref No.</label>
+            </div>
+            
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model._budgetMeter.PrepaymentReference, new { ReadOnly = true})
+            </div>           
+            <div class="editor-label">
+                <label>Statement Ref No.</label>
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model._budgetMeter.StatementReference, new { ReadOnly = false})
+                @Html.ValidationMessageFor(model => model._budgetMeter.StatementReference)
+            </div>
+        }      
+         @if (Model._budgetMeter.ProcessingStatus == "Booking")
+         { 
+             <div class="editor-label">
+               <label>Prepayment Ref No.</label>
+            </div>
+            
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model._budgetMeter.PrepaymentReference, new { ReadOnly = true})
+            </div>     
+            <div class="editor-label">
+              <label>Booking</label>
+           </div>
+            <div class="Editor-field">
+                @Html.CheckBoxFor(model => model._budgetMeter.Booking)
+            </div>      
+         }   
+        @if (Model._budgetMeter.ProcessingStatus == "Booking")
+        { 
+        
+            <table class="Itemgrid">
+            <tr>
+                <th>
+                   CODA&nbsp;Reference&nbsp;No
+                </th>
+                <th>
+                    Payment&nbsp;Date
+                </th>
+                <th>
+                    Amount
+                </th>
+            </tr>
+                @if (Model._budgetMeterCODA != null)
+                {
+                    foreach (var item in Model._budgetMeterCODA)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CODAReference)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PaymentDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AmountIncl)
+                            </td>
+                        </tr>
+                    }
+                }
+         
+         
+            </table>
+        } 
+        <table>
+            <tr>
+                <td> 
+                    <input type="submit" name="btnSave" id="btnSave" value="Save" />
+                    <input type="submit" name="btnSave" id="btnRefreshContractNo" value="Update Contract Number" style="width: 200px" />
+                </td>
+                <td>@Html.ActionLink("Cancel", "Index", "BudgetMeter", new { Id = Model._budgetMeter.ID }, new { @class = "FakeButton" })</td>
+            </tr>
+        </table> 
+    
+    </fieldset>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

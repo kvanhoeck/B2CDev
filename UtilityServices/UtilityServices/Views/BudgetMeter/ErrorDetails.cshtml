@@ -1,0 +1,79 @@
+﻿@model IEnumerable<UtilityServices.Models.BudgetMeterError>
+
+
+@{
+    ViewBag.Title = "Budget Meter Errors";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>&nbsp;</h2>
+            </hgroup>
+            <p class="ErrorMessage">&nbsp;@ViewBag.Message</p>
+        </div>
+    </section>
+}
+    <table class="Itemgrid">
+        <thead>
+            <tr>
+                <th>
+                   CODA&nbsp;Ref.
+                </th>
+                <th >
+                    EAN
+                </th>
+                <th >
+                    Charge&nbsp;Date
+                </th>
+                <th>
+                    Talexus
+                </th>
+                <th>
+                    ErrorMessage&nbsp;/&nbsp;Comment
+                </th>
+                <th>
+                    MD&nbsp;Checked
+                </th>
+            </tr>
+            </thead>
+    @if (Model != null) { 
+         foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CODAReference)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EAN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ChargeDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TalexusAmount)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ErrorMessage)
+                </td>
+                <td>
+                    @if (item.ErrorMessage.Contains("CONTRACT"))
+                    {
+                            @Html.ActionLink("Checked", "ErrorDetails", "BudgetMeter", new { EAN = item.EAN, CODAReference = item.CODAReference, ChargeDate = item.ChargeDate}, new { @class = "FakeButtonSmall" })
+                     }
+                </td>
+            </tr>
+         }
+        }
+    </table>
+
+@if (Model != null)
+{
+    @Html.ActionLink("Back", "ErrorList", "BudgetMeter", new { CODAReference = Model.ElementAt(0).CODAReference }, new { @class = "FakeButton" })  
+
+}
+else
+{ 
+    @Html.ActionLink("Back", "ErrorList", "BudgetMeter")
+}

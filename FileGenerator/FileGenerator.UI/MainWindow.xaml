@@ -1,0 +1,168 @@
+﻿<Window x:Class="FileGenerator.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Eneco File Generator" Height="768" Width="1024" ResizeMode="NoResize" >
+    <Grid>
+        <Grid>
+            <Image Name="image1" Source="Images/Logo_Eneco.png" Margin="12,0,730,640" />
+            <Label Content="Eneco File Generator" Height="40" HorizontalAlignment="Left" Margin="20,26,0,0" Name="label1" VerticalAlignment="Top" Width="986" FontSize="24" FontWeight="Bold" Foreground="#CE1442" FontFamily="Segoe UI" HorizontalContentAlignment="Center" />
+        </Grid>
+        <StackPanel Margin="10,111,698,115">
+            <Label Content="Database" Height="28" Name="label2" FontWeight="Bold" Foreground="#F7BA5A"/>
+            <ComboBox Name="cboDatabase" Width="150">
+                <ComboBoxItem Content="Accept"/>
+                <ComboBoxItem Content="Production"/>
+            </ComboBox>
+            <Label Content="File Type" Height="28" Name="label3" FontWeight="Bold"  Foreground="#F7BA5A"/>
+            <ComboBox Name="cboFileType" Width="150" SelectionChanged="cboFileType_SelectionChanged" >
+                <ComboBoxItem Content="Soctar Full Dump"/>
+                <ComboBoxItem Content="Soctar Mutation"/>
+                <ComboBoxItem Content="AX NAW Dump"/>
+                <ComboBoxItem Content="AX Contract Dump"/>
+                <ComboBoxItem Content="AX EAN Dump"/>
+                <ComboBoxItem Content="AX Renewal Dump"/>
+                <ComboBoxItem Content="AX Portfolio Dump"/>
+                <ComboBoxItem Content="B2B Price evolution"/>
+                <ComboBoxItem Content="Soctar Answer File" />
+            </ComboBox>
+            <Label Content="File Location" Height="28" Name="label7" FontWeight="Bold" Foreground="#F7BA5A"/>
+            <Button Name="cmdFileLocation" Content="Select location" Width="150" Click="cmdFileLocation_Click" />
+            <Label Name="lblLocation" Width="150"/>
+        </StackPanel>
+        <StackPanel Height="514" HorizontalAlignment="Left" Margin="320,111,0,0" Name="stpOptionsDump" VerticalAlignment="Top" Width="688" Visibility="Hidden">
+            <Grid Height="275" Name="grdGenerate" Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label Content="Dump parameters" Grid.Column="1" Height="28" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Name="label6" Width="175" FontSize="14" Foreground="#F7BA5A"/>
+                <Label Content="Date Dump" Grid.Row="2" Height="28" HorizontalAlignment="Left" Margin="10,0,0,0" Name="label4" VerticalAlignment="Top" FontWeight="Bold" />
+                <Label Content="Delivery Date" Grid.Row="3" Height="28" HorizontalAlignment="Left" Margin="10,0,0,0" Name="label5" VerticalAlignment="Top" FontWeight="Bold" />
+                <DatePicker Grid.Column="1" Grid.Row="2" Height="25" HorizontalAlignment="Left" Margin="0,3,0,0" Name="dtDumpDate" VerticalAlignment="Top" Width="175" />
+                <DatePicker Grid.Column="1" Grid.Row="3" Height="25" HorizontalAlignment="Left" Margin="0,3,0,0" Name="dtDeliveryDate" VerticalAlignment="Top" Width="175" />
+            </Grid>
+        </StackPanel>
+        <StackPanel Height="514" HorizontalAlignment="Left" Margin="320,111,0,0" Name="stpNotSupported" VerticalAlignment="Top" Width="688" Visibility="Hidden" >
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Red" Name="lblNotSupported" Content="NOT SUPPORTED" Margin="50"/>
+        </StackPanel>
+
+        <StackPanel Height="514" HorizontalAlignment="Left" Margin="320,111,0,0" Name="stpRenewalDump" VerticalAlignment="Top" Width="688" Visibility="Hidden" >
+            <Grid Height="275" x:Name="grdRenewal" Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label Content="Renewal parameters" Grid.Column="1" Height="28" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" x:Name="lblRenewalParam" Width="175" FontSize="14" Foreground="#F7BA5A"/>
+                <Label Content="Renewal Month" Grid.Row="2" Height="28" HorizontalAlignment="Left" Margin="10,0,0,0" x:Name="lblMonth" VerticalAlignment="Top" FontWeight="Bold" />
+                <ComboBox x:Name="cboRenewalMonth" Width="150" Grid.Row="2" Grid.Column="1" Height="22">
+                    <ComboBoxItem Content="January"/>
+                    <ComboBoxItem Content="February"/>
+                    <ComboBoxItem Content="March"/>
+                    <ComboBoxItem Content="April"/>
+                    <ComboBoxItem Content="May"/>
+                    <ComboBoxItem Content="June"/>
+                    <ComboBoxItem Content="July"/>
+                    <ComboBoxItem Content="August"/>
+                    <ComboBoxItem Content="September"/>
+                    <ComboBoxItem Content="October"/>
+                    <ComboBoxItem Content="November"/>
+                    <ComboBoxItem Content="December"/>
+                </ComboBox>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Height="514" HorizontalAlignment="Left" Margin="320,111,0,0" Name="stpPriceEvol" VerticalAlignment="Top" Width="688" Visibility="Hidden">
+            <Grid Height="275" Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label Content="Price Evolution parameters" Grid.Column="1" Height="28" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold"  Width="200" FontSize="14" Foreground="#F7BA5A"/>
+                <Label Content="Service Type" Grid.Row="2" Height="28" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                <Label Content="Region" Grid.Row="3" Height="28" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                <Label Content="Start Period" Grid.Row="4" Height="28" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontWeight="Bold" />
+                <Label Content="End Period" Grid.Row="5" Height="28" HorizontalAlignment="Left" Margin="10,0,0,0"  VerticalAlignment="Top" FontWeight="Bold" />
+                <!--<Label Content="Vendor GLN" Grid.Row="4" Height="28" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontWeight="Bold"/>-->
+                <DatePicker Grid.Column="1" Grid.Row="4" Height="25" HorizontalAlignment="Left" Margin="0,3,0,0" Name="dtStartPeriod" VerticalAlignment="Top" Width="175" />
+                <DatePicker Grid.Column="1" Grid.Row="5" Height="25" HorizontalAlignment="Left" Margin="0,3,0,0" Name="dtEndPeriod" VerticalAlignment="Top" Width="175" />
+                <ComboBox Name="cboServiceType" Width="175" Height="25" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="0,3,0,0">
+                    <ComboBoxItem Content="Electricity"/>
+                    <ComboBoxItem Content="Gas"/>
+                </ComboBox>
+                <ComboBox Name="cboRegion" Width="175" Height="25" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="0,3,0,0">
+                    <ComboBoxItem Content="Brussels"/>
+                    <ComboBoxItem Content="Wallonia"/>
+                </ComboBox>
+                <!--<ComboBox Name="cboVendor" Width="175" Height="25" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="0,3,0,0"/>-->
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Height="514" HorizontalAlignment="Left" Margin="320,111,0,0" Name="stpSoctarAnswer" VerticalAlignment="Top" Width="688" Visibility="Hidden">
+            <Grid Height="275" x:Name="grdSoctarAnswer" Width="Auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Label Content="Soctar Answer File parameters" Grid.Column="1" Height="28" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" x:Name="lblSoctarAnswer" Width="225" FontSize="14" Foreground="#F7BA5A"/>
+                <Label Content="Source File" Grid.Row="2" Height="28" HorizontalAlignment="Left" Margin="10,0,0,0" x:Name="lblSourceFile" VerticalAlignment="Top" FontWeight="Bold" />
+                <Button Name="cmdUploadFile" Content="Select upload file" Width="150" Click="cmdUploadFile_Click" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top"/>
+                <Label Name="lblSourceFileLocation" Width="250" Grid.Row="3" Margin="10,0,0,0" HorizontalAlignment="Left"/>
+            </Grid>
+            
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Left" Height="100" Margin="10,630,0,0" VerticalAlignment="Top" Width="998" Name="stpButtons">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Button Content="Cancel" Grid.Column="2" HorizontalAlignment="Left" Margin="248,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Name="cmdCancel" Click="cmdCancel_Click"/>
+                <Button Content="Generate" Grid.Column="2" HorizontalAlignment="Left" Margin="168,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Name="cmdGenerate" Click="cmdGenerate_Click"/>
+            </Grid>
+            
+        </StackPanel>
+
+
+    </Grid>
+        
+</Window>

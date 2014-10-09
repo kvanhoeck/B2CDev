@@ -1,0 +1,117 @@
+﻿@model IEnumerable<UtilityServices.Models.BudgetMeterError>
+
+
+@{
+    ViewBag.Title = "Budget Meter Errors";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>&nbsp;</h2>
+            </hgroup>
+            <p class="ErrorMessage">&nbsp;@ViewBag.Message</p>
+        </div>
+    </section>
+}
+<h5> CODA Received</h5>
+<table class="Itemgrid">
+    <thead>
+        <tr>
+            <th>
+               CODA&nbsp;Reference
+            </th>
+            <th >
+                Grid&nbsp;Owner&nbsp;
+            <th>
+                Talexus&nbsp;Amount
+            </th>
+                    <th>
+                Talexus&nbsp;Amount&nbsp;Error
+            </th>
+            <th>
+                CODA&nbsp;Amount
+            </th>
+
+            <th>
+                @Html.ActionLink("Retry All Errors", "RetryAllErrors") 
+            </th>
+        </tr>
+        </thead>
+@if (Model != null) { 
+     foreach (var item in Model.Where(item => item.CODAAmount != "N/A")) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CODAReference)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GridOwner)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TalexusAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TalexusAmountError)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CODAAmount)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "ErrorDetails", new { CoDAReference=item.CODAReference }) 
+               @Html.ActionLink("Download","GetExcelErrorData",new { CoDAReference=item.CODAReference })
+                @Html.ActionLink("Retry", "RetryError", new { CoDAReference=item.CODAReference }) 
+            </td>
+        </tr>
+     }
+    }
+  
+
+</table>
+<h5> No CODA received</h5>
+<table class="Itemgrid">
+    <thead>
+        <tr>
+            <th>
+               CODA&nbsp;Reference
+            </th>
+            <th >
+                Grid&nbsp;Owner&nbsp;
+            <th>
+                Talexus&nbsp;Amount
+            </th>
+            <th>
+                CODA&nbsp;Amount
+            </th>
+
+            <th>
+
+            </th>
+        </tr>
+        </thead>
+@if (Model != null) { 
+     foreach (var item in Model.Where(item => item.CODAAmount == "N/A")) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CODAReference)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GridOwner)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TalexusAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CODAAmount)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "ErrorDetails", new { CoDAReference=item.CODAReference }) 
+               @Html.ActionLink("Download","GetExcelErrorData",new { CoDAReference=item.CODAReference })
+
+            </td>
+        </tr>
+     }
+    }
+  
+
+</table>

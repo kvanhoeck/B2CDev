@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+            <p>
+                &nbsp;
+            </p>
+        </div>
+    </section>
+}
+<ol class="round">
+    <li class="one">
+        <h5>@Html.ActionLink("BudgetMeter Invoicing", "","BudgetMeter/index")</h5>
+        Make manually invoices for customers with Budget Meter.
+    </li>
+    <li class="two">
+        <h5>@Html.ActionLink("BudgetMeter Errors", "","BudgetMeter/ErrorList")</h5>
+        Budget Meters that cannot be invoiced during errors.
+    </li>
+    <li class="three">
+        <h5>@Html.ActionLink("Export Budget Meter Source Data", "../BudgetMeter/GetExcelData")</h5>
+        Export all source data for the Budget Meters.
+    </li>
+
+</ol>

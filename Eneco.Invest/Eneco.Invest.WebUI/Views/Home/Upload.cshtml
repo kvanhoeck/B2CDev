@@ -1,0 +1,46 @@
+﻿@model Eneco.Invest.WebUI.Models.UploadModel
+
+@{
+    ViewBag.Title = "Upload & Sync";
+}
+
+<script type="text/javascript">
+    function getFile() {
+        document.getElementById("upfile").click();
+    }
+    function sub(obj) {
+        var file = obj.value;
+        var fileName = file.split("\\");
+        document.getElementById("uploadFile").innerHTML = fileName[fileName.length - 1];
+        event.preventDefault();
+    }
+</script>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <table width="100%">
+        <tr>
+            <th>Isabel</th>
+            <td>@Html.LabelFor(model => model.IsabelLastUpload) at @Model.IsabelLastUpload</td>
+            <td>
+                <div hidden="true">
+                    @Html.TextBoxFor(x => x.IsabelFile, new { @id = "upfile", type = "file", @onchange = "sub(this)" })
+                </div>
+                <div id="uploadFile" onclick="getFile()">Browse...</div>
+            </td>
+            <td><button type="submit">Upload file</button></td>
+        </tr>
+        <tr>
+            <th>Axapta</th>
+            <td>@Html.LabelFor(model => model.AxaptaLastSync) at @Model.AxaptaLastSync</td>
+            <td></td>
+            <td><input type="button" name="btnAxaptaSync" value="Sync now" /></td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+        <tr><td>&nbsp;</td></tr>
+        <tr>
+            <th>Progress</th>
+            <td colspan="3"><textarea>@Model.ProcessProgression</textarea></td>
+        </tr>
+    </table>
+}

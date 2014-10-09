@@ -1,0 +1,86 @@
+﻿@model IEnumerable<UtilityServices.Models.BudgetMeter>
+
+
+@{
+    ViewBag.Title = "Budget Meter to Invoice";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>&nbsp;</h2>
+            </hgroup>
+            <p class="ErrorMessage">&nbsp;@ViewBag.Message</p>
+        </div>
+    </section>
+}
+
+ @using (Html.BeginForm("Index","BudgetMeter",FormMethod.Get)){     
+    
+         <table>
+             <tr>
+                 <td> <label>Processing Status:</label> </td>
+                 <td> @Html.DropDownList("ProcessingStatus","All") </td>
+                 <td> <label>EAN:</label></td>
+                 <td>@Html.TextBox("EAN")   </td>
+                 <td><input type="submit" value="Filter" /></td>
+             </tr>
+         </table>
+
+        }
+<table class="Itemgrid">
+        <tr>
+            <th>
+               Contract&nbsp;No
+            </th>
+            <th>
+                Account&nbsp;No
+            </th>
+            <th>
+                EAN
+            </th>
+            <th>
+                Pre&nbsppayment&nbsp;ref.
+            </th>
+            <th>
+                Statement&nbsp;ref.
+            </th>
+            <th>
+                Processing&nbsp;Status
+            </th>
+            <th>
+
+            </th>
+        </tr>
+@if (Model != null) { 
+     foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContractNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EAN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrepaymentReference)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatementReference)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProcessingStatus)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) 
+                @Html.ActionLink("Download","GetExcelData",new { id=item.ID })
+            </td>
+        </tr>
+    }
+    }
+  
+
+</table>
